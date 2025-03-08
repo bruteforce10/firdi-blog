@@ -1,29 +1,64 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import Link from "next/link";
-import { Menu } from "lucide-react";
-import { Facebook, Instagram, Youtube } from "lucide-react";
-import { useTheme } from "next-themes";
-import { Switch } from "@/components/ui/switch";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-
+import { useEffect, useState } from "react"
+import Link from "next/link"
+import { Menu } from "lucide-react"
+import { Facebook, Instagram, Youtube } from "lucide-react"
+import { useTheme } from "next-themes"
+import { Switch } from "@/components/ui/switch"
+import { Button } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import AuthLink from "./AuthLink"
 export default function Navbar() {
-  const { theme, setTheme } = useTheme();
-  const [isMounted, setIsMounted] = useState(false);
+  const {  setTheme, resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
 
-  useState(() => {
-    setIsMounted(true);
-  });
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
+    const newTheme = resolvedTheme === "dark" ? "light" : "dark"
+    setTheme(newTheme)
+  }
+
+ 
+  if (!mounted) {
+    return (
+      <header className="sticky top-0 z-50 w-full border-b bg-background">
+        <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+          <div className="hidden md:flex items-center space-x-4">
+            <div className="w-5 h-5" />
+            <div className="w-5 h-5" />
+            <div className="w-5 h-5" />
+            <div className="w-5 h-5" />
+          </div>
+
+          {/* Placeholder untuk mobile menu */}
+          <div className="md:hidden w-8 h-8" />
+
+          {/* Placeholder untuk logo */}
+          <div className="text-xl font-bold">lamablog</div>
+
+          {/* Placeholder untuk navigation dan theme toggle */}
+          <div className="flex items-center space-x-4">
+            <div className="w-8 h-4" />
+            <div className="hidden md:flex items-center space-x-4">
+              <div className="w-16 h-4" />
+              <div className="w-16 h-4" />
+              <div className="w-16 h-4" />
+              <div className="w-16 h-4" />
+            </div>
+          </div>
+        </div>
+      </header>
+    )
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
       <div className="container flex h-16 items-center justify-between px-4 md:px-6">
+        {/* Social Media Icons - Hidden on mobile */}
         <div className="hidden md:flex items-center space-x-4">
           <Link href="#" className="text-foreground hover:text-primary">
             <Facebook size={20} />
@@ -56,6 +91,7 @@ export default function Navbar() {
           </Link>
         </div>
 
+        {/* Mobile Menu Button */}
         <Sheet>
           <SheetTrigger asChild className="md:hidden">
             <Button variant="ghost" size="icon" className="md:hidden">
@@ -78,9 +114,7 @@ export default function Navbar() {
                 <Link href="/about" className="hover:text-primary">
                   About
                 </Link>
-                <Link href="/login" className="hover:text-primary">
-                  Login
-                </Link>
+                <AuthLink />
               </nav>
               <div className="flex flex-col gap-2">
                 <div className="text-sm font-medium">Follow us</div>
@@ -120,20 +154,16 @@ export default function Navbar() {
           </SheetContent>
         </Sheet>
 
+        {/* Logo */}
         <Link href="/" className="text-xl font-bold">
           lamablog
         </Link>
 
+        {/* Navigation and Dark Mode Toggle */}
         <div className="flex items-center space-x-4">
-          {isMounted && (
-            <div className="flex items-center">
-              <Switch
-                checked={theme === "dark"}
-                onCheckedChange={toggleTheme}
-                aria-label="Toggle dark mode"
-              />
-            </div>
-          )}
+          <div className="flex items-center">
+            <Switch checked={resolvedTheme === "dark"} onCheckedChange={toggleTheme} aria-label="Toggle dark mode" />
+          </div>
           <nav className="hidden md:flex items-center space-x-4">
             <Link href="/" className="text-sm hover:text-primary">
               Homepage
@@ -144,12 +174,11 @@ export default function Navbar() {
             <Link href="/about" className="text-sm hover:text-primary">
               About
             </Link>
-            <Link href="/login" className="text-sm hover:text-primary">
-              Login
-            </Link>
+            <AuthLink />
           </nav>
         </div>
       </div>
     </header>
-  );
+  )
 }
+
