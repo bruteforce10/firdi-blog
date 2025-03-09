@@ -38,17 +38,5 @@ const categories = [
     },
   ]
 
-  const getCategoryColor = (slug) => {
-    const colors = {
-      style: "bg-blue-300/20",
-      fashion: "bg-pink-300/20",
-      food: "bg-green-300/20",
-      travel: "bg-orange-300/20",
-      culture: "bg-amber-300/30",
-      coding: "bg-indigo-300/20",
-    }
-  
-    return colors[slug] || "bg-gray-200"
-  }
 
-  export {categories, getCategoryColor}
+  export {categories}

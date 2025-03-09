@@ -9,6 +9,8 @@ import { Switch } from "@/components/ui/switch"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import AuthLink from "./AuthLink"
+
+
 export default function Navbar() {
   const {  setTheme, resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)

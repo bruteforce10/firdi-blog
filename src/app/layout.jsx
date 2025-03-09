@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/app/components/theme-provider";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { SessionProvider } from "next-auth/react"
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -17,18 +18,20 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
+        <SessionProvider>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
-        >
+          >
           <div className="container mx-auto min-h-screen">
             <Navbar />
             {children}
             <Footer />
           </div>
         </ThemeProvider>
+          </SessionProvider>
       </body>
     </html>
   );
