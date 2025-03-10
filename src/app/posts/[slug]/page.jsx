@@ -1,6 +1,7 @@
-import Image from "next/image"
-import Menu from "../components/Menu"
-import Comments from "../components/Comments"
+import Comments from "@/app/components/Comments";
+import Menu from "@/app/components/Menu";
+import Image from "next/image";
+
 const generateDummyPost = (slug) => {
   return {
     title: slug
@@ -19,45 +20,65 @@ const generateDummyPost = (slug) => {
       <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
       <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
     `,
+  };
+};
+
+const getData = async (slug) => {
+  const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
   }
-}
+  return res.json();
+};
 
-
-
-const SinglePage = ({ params }) => {
-  const { slug } = params
-
-  const data = generateDummyPost(slug)
+const SinglePage = async ({ params }) => {
+  const { slug } = params;
+  const { post } = await getData(slug);
 
   return (
     <div className="container mx-auto px-4 mt-12">
+      <pre>{JSON.stringify(post, null, 2)}</pre>
       <div className="flex flex-col md:flex-row items-center gap-12">
         <div className="flex-1">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-12 font-bold">{data.title}</h1>
-          <div className="flex items-center gap-5">
-            {data.user.image && (
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-12 font-bold">
+            {post.title}
+          </h1>
+          {/* <div className="flex items-center gap-5">
+            {data?.user?.image && (
               <div className="relative w-12 h-12">
-                <Image src={data.user.image || "/placeholder.svg"} alt="" fill className="rounded-full object-cover" />
+                <Image
+                  src={data?.user?.image || "/placeholder.svg"}
+                  alt=""
+                  fill
+                  className="rounded-full object-cover"
+                />
               </div>
             )}
             <div className="flex flex-col gap-1 text-muted-foreground">
               <span className="text-xl font-medium">{data.user.name}</span>
               <span className="text-sm">01.01.2024</span>
             </div>
-          </div>
+          </div> */}
         </div>
-        {data.img && (
+        {post?.img && (
           <div className="flex-1 relative h-[350px] w-full hidden md:block">
-            <Image src={data.img || "/placeholder.svg"} alt="" fill className="object-cover rounded-lg" />
+            <Image
+              src={post?.img || "/placeholder.svg"}
+              alt=""
+              fill
+              className="object-cover rounded-lg"
+            />
           </div>
         )}
       </div>
       <div className="flex flex-col lg:flex-row gap-12 mt-16">
         <div className="flex-[5]">
-          <div
+          {/* <div
             className="prose prose-lg dark:prose-invert max-w-none"
-            dangerouslySetInnerHTML={{ __html: data.desc }}
-          />
+            dangerouslySetInnerHTML={{ __html: data?.desc }}
+          /> */}
           <div className="mt-16">
             <Comments />
           </div>
@@ -67,8 +88,7 @@ const SinglePage = ({ params }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SinglePage
-
+export default SinglePage;
