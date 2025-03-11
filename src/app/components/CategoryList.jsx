@@ -21,21 +21,21 @@ const CategoryList = async () => {
         {categories.length > 0 &&
           categories.map((item) => (
             <Link
-              href={`/blog?cat=${item.slug}`}
+              href={`/blog?cat=${item?.slug}`}
               className={`flex items-center justify-center gap-2.5 capitalize rounded-lg h-20 } 
                 w-full sm:w-[45%] md:w-[30%] lg:w-[23%] xl:w-[15%] transition-transform hover:scale-105`}
-              key={item._id}
+              key={item?._id}
             >
-              {item.img && (
+              {item?.img && (
                 <Image
-                  src={item.img || "/placeholder.svg"}
-                  alt={item.title}
+                  src={item?.img || "/placeholder.svg"}
+                  alt={item?.title}
                   width={32}
                   height={32}
                   className="rounded-full w-10 h-10 object-cover"
                 />
               )}
-              {item.title}
+              {item?.title}
             </Link>
           ))}
       </div>
