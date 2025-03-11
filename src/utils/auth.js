@@ -1,15 +1,11 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import { prisma } from "./prisma";
-
-export const config = {
-  runtime: 'nodejs',
-};
+import client from "@/lib/db";
+import { MongoDBAdapter } from "@auth/mongodb-adapter";
 
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: MongoDBAdapter(client),
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
