@@ -2,9 +2,7 @@
 import { prisma } from "@/utils/prisma";
 import { NextResponse } from "next/server";
 
-export const config = {
-  runtime: 'nodejs',
-};
+export const runtime = "nodejs";
 
 
 export const GET = async () => {
