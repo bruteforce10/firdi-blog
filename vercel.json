@@ -1,0 +1,14 @@
+{
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/next",
+        "config": {
+          "nodeModulesCacheConfig": {
+            "applicationId": "your-app-id",
+            "skipInstall": true
+          }
+        }
+      }
+    ]
+  }

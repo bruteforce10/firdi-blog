@@ -6,6 +6,12 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['@prisma/client', '@auth/prisma-adapter'],
   },
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals = [...config.externals, '@prisma/client', '@auth/prisma-adapter'];
+    }
+    return config;
+  },
 };
 
 export default nextConfig;
