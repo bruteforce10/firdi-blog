@@ -1,4 +1,4 @@
-import Card from "./card";
+import Card from "./Card";
 import Pagination from "./Pagination";
 
 const getData = async (page, cat) => {
