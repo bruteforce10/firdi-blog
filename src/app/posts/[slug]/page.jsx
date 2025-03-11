@@ -24,7 +24,7 @@ const generateDummyPost = (slug) => {
 };
 
 const getData = async (slug) => {
-  const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
+  const res = await fetch(`https://firdi-blog-omega.vercel.app/api/posts/${slug}`, {
     cache: "no-store",
   });
   if (!res.ok) {

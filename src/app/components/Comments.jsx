@@ -13,7 +13,7 @@ const Comments = ({ postSlug }) => {
   const fetcher = (url) => fetch(url).then((res) => res.json());
 
   const { data, mutate, isLoading } = useSWR(
-    `http://localhost:3000/api/comments?postSlug=${postSlug}`,
+    `https://firdi-blog-omega.vercel.app/api/comments?postSlug=${postSlug}`,
     fetcher
   );
 

@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const getData = async () => {
-  const res = await fetch("http://localhost:3000/api/categories", {
+  const res = await fetch("https://firdi-blog-omega.vercel.app/api/categories", {
     cache: "no-store",
   });
   if (!res.ok) {

@@ -3,7 +3,7 @@ import Pagination from "./Pagination";
 
 const getData = async (page, cat) => {
   const res = await fetch(
-    `http://localhost:3000/api/posts?page=${page}&cat=${cat || ""}`,
+    `https://firdi-blog-omega.vercel.app/api/posts?page=${page}&cat=${cat || ""}`,
     {
       cache: "no-store",
     }
