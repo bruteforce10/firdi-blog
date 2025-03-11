@@ -1,19 +1,21 @@
 import { prisma } from "@/utils/prisma";
 import { NextResponse } from "next/server";
 
-export const GET = async (req, { params }) => {
-  const { slug } = params;
+export const GET = async (req) => {
+  const { searchParams } = new URL(req.url);
+  const postSlug = searchParams.get("postSlug");
+
   try {
-    const post = await prisma.post.findUnique({
+    const comments = await prisma.comment.findMany({
       where: {
-        slug,
+        ...(postSlug && { postSlug }),
       },
       include: {
         user: true,
       },
     });
 
-    return new NextResponse(JSON.stringify({ post }, { status: 200 }));
+    return new NextResponse(JSON.stringify({ comments }, { status: 200 }));
   } catch (err) {
     console.log(err);
     return new NextResponse(

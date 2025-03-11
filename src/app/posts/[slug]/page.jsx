@@ -39,17 +39,17 @@ const SinglePage = async ({ params }) => {
 
   return (
     <div className="container mx-auto px-4 mt-12">
-      <pre>{JSON.stringify(post, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(post, null, 2)}</pre> */}
       <div className="flex flex-col md:flex-row items-center gap-12">
         <div className="flex-1">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-12 font-bold">
             {post.title}
           </h1>
-          {/* <div className="flex items-center gap-5">
-            {data?.user?.image && (
+          <div className="flex items-center gap-5">
+            {post?.user?.image && (
               <div className="relative w-12 h-12">
                 <Image
-                  src={data?.user?.image || "/placeholder.svg"}
+                  src={post?.user?.image || "/placeholder.svg"}
                   alt=""
                   fill
                   className="rounded-full object-cover"
@@ -57,10 +57,10 @@ const SinglePage = async ({ params }) => {
               </div>
             )}
             <div className="flex flex-col gap-1 text-muted-foreground">
-              <span className="text-xl font-medium">{data.user.name}</span>
+              <span className="text-xl font-medium">{post.user.name}</span>
               <span className="text-sm">01.01.2024</span>
             </div>
-          </div> */}
+          </div>
         </div>
         {post?.img && (
           <div className="flex-1 relative h-[350px] w-full hidden md:block">
@@ -75,12 +75,12 @@ const SinglePage = async ({ params }) => {
       </div>
       <div className="flex flex-col lg:flex-row gap-12 mt-16">
         <div className="flex-[5]">
-          {/* <div
+          <div
             className="prose prose-lg dark:prose-invert max-w-none"
-            dangerouslySetInnerHTML={{ __html: data?.desc }}
-          /> */}
+            dangerouslySetInnerHTML={{ __html: post?.desc }}
+          />
           <div className="mt-16">
-            <Comments />
+            <Comments postSlug={slug} />
           </div>
         </div>
         <div className="flex-[2]">
