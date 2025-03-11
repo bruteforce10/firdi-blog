@@ -1,6 +1,9 @@
-export const runtime = 'nodejs'
+import { handlers } from "@/utils/auth"
 
-import { handlers } from "@/utils/auth" 
+export const config = {
+    runtime: 'nodejs',
+  };
+  
 
 
 export const { GET, POST } = handlers
