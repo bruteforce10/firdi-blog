@@ -10,6 +10,11 @@ const ReactQuill = dynamic(() => import('react-quill'), {
     loading: () => <p>Loading editor...</p>
 })
 import "react-quill/dist/quill.bubble.css";
+import { app } from "@/utils/firebase";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
+
+
 
 const WritePageSection = () => {
   const [open, setOpen] = useState(false);
@@ -32,6 +37,41 @@ const WritePageSection = () => {
     }
   }, [session, status, router]);
 
+  useEffect(() => {
+    const storage = getStorage(app);
+    const upload = () => {
+      const name = new Date().getTime() + file.name;
+      const storageRef = ref(storage, name);
+
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {},
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setMedia(downloadURL);
+          });
+        }
+      );
+    };
+
+    file && upload();
+  }, [file]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -44,12 +84,26 @@ const WritePageSection = () => {
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
-      // In a real app, this would upload the file
-      // For demo, we'll just set a placeholder URL
       setMedia("/placeholder.svg");
     }
   };
 
+  const slugify = (str) =>
+    str
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/[\s_-]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+
+  const handleSubmit = async () => {
+    const res = await fetch("/api/posts", {
+      method: "POST",
+      body: JSON.stringify({ title, desc: value, img: media, slug: slugify(catSlug),catSlug: catSlug || "style", }),
+    });
+    console.log(res);
+  };
 
   return (
     <div className="relative flex flex-col container mx-auto px-4">
@@ -110,6 +164,7 @@ const WritePageSection = () => {
       </div>
       <button 
         className="absolute top-4 right-0 py-2.5 px-5 border-none bg-[#1a8917] text-white cursor-pointer rounded-full hover:bg-[#146c12] transition-colors"
+        onClick = {handleSubmit}
       >
         Publish
       </button>

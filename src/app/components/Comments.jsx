@@ -6,28 +6,25 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
 
-const dummyComments = [
-  {
-    _id: "1",
-    user: {
-      name: "Jane Smith",
-      image: "/p1.jpeg",
-    },
-    desc: "This is a great article! I learned a lot from reading it.",
-    createdAt: "2024-01-05",
-  },
-];
 
 const Comments = ({ postSlug }) => {
   const [desc, setDesc] = useState("");
-  const [comments, setComments] = useState(dummyComments);
   const { data: session } = useSession();
   const fetcher = (url) => fetch(url).then((res) => res.json());
 
-  const { data, isLoading } = useSWR(
+  const { data, mutate, isLoading } = useSWR(
     `http://localhost:3000/api/comments?postSlug=${postSlug}`,
     fetcher
   );
+
+  const handleSubmit = async () => {
+    await fetch(`/api/comments`, {
+      method: "POST",
+      body: JSON.stringify({ postSlug,  desc }),
+    });
+    mutate();
+    setDesc("");
+  }; 
 
   return (
     <div className="mt-12">
@@ -42,7 +39,10 @@ const Comments = ({ postSlug }) => {
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
           />
-          <button className="px-5 py-4 bg-teal-600 text-white font-bold border-none rounded-md cursor-pointer hover:bg-teal-700 transition-colors whitespace-nowrap">
+          <button
+            onClick={handleSubmit}
+            className="px-5 py-4 bg-teal-600 text-white font-bold border-none rounded-md cursor-pointer hover:bg-teal-700 transition-colors whitespace-nowrap"
+          >
             Send
           </button>
         </div>

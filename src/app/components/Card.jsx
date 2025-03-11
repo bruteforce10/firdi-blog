@@ -7,7 +7,7 @@ const Card = ({ item }) => {
       {item.img && (
         <div className="hidden lg:block relative w-full lg:w-1/2 h-[350px]">
           <Image
-            src={"/p1.jpeg"}
+            src={item.img}
             alt=""
             fill
             className="object-cover rounded-lg"
