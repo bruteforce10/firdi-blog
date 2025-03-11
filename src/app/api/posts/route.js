@@ -2,6 +2,8 @@ import { auth } from "@/utils/auth";
 import { prisma } from "@/utils/prisma";
 import { NextResponse } from "next/server";
 
+export const runtime = 'nodejs'
+
 export const GET = async (req) => {
   const { searchParams } = new URL(req.url);
   const page = searchParams.get("page") || 1;
