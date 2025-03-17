@@ -8,11 +8,11 @@ const AuthLink = () => {
   return <>
   {session ? (
     <>
-    <Link href="/write" className="text-sm hover:text-primary">Write</Link>
-    <button className="text-sm cursor-pointer hover:text-primary" onClick={() => signOut()}>Sign Out</button>
+    <Link href="/write" className="md:text-sm text-md hover:text-primary">Write</Link>
+    <button className="md:text-sm text-md cursor-pointer hover:text-primary" onClick={() => signOut()}>Sign Out</button>
   </>
   ) : (
-    <Link href="/login" className="text-sm hover:text-primary">Login</Link>
+    <Link href="/login" className="md:text-sm text-md hover:text-primary">Login/Register</Link>
   )}
   </>
 };

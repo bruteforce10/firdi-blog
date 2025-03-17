@@ -1,21 +1,21 @@
 import Card from "./Card";
 import Pagination from "./Pagination";
 
-const getData = async (page, cat) => {
+const getData = async (page, cat, getData) => {
   const res = await fetch(
-    `https://firdi-blog-omega.vercel.app/api/posts?page=${page}&cat=${cat || ""}`,
+    `https://firdi-blog-omega.vercel.app/api/posts?page=${page}&cat=${cat || ""}&getData=${getData}`,
     {
       cache: "no-store",
     }
   );
-  if (!res.ok) {
+  if (!res.ok) {  
     throw new Error("Failed to fetch data");
-  }
+  } 
   return res.json();
 };
 
 const CardList = async ({ page, cat }) => {
-  const { posts, count } = await getData(page, cat);
+  const { posts, count } = await getData(page, cat, "data-pagination");
 
   const POST_PER_PAGE = 2;
 

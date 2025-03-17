@@ -9,9 +9,10 @@ const ReactQuill = dynamic(() => import('react-quill'), {
     ssr: false,
     loading: () => <p>Loading editor...</p>
 })
-import "react-quill/dist/quill.bubble.css";
+import 'react-quill/dist/quill.snow.css';
 import { app } from "@/utils/firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { Textarea } from "@/components/ui/textarea";
 
 
 
@@ -22,6 +23,7 @@ const WritePageSection = () => {
   const [media, setMedia] = useState("");
   const [value, setValue] = useState("");
   const [title, setTitle] = useState("");
+  const [descShort, setDescShort] = useState("");
   const [catSlug, setCatSlug] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
@@ -100,9 +102,12 @@ const WritePageSection = () => {
   const handleSubmit = async () => {
     const res = await fetch("/api/posts", {
       method: "POST",
-      body: JSON.stringify({ title, desc: value, img: media, slug: slugify(catSlug),catSlug: catSlug || "style", }),
+      body: JSON.stringify({ title, desc: value, img: media, slug: slugify(catSlug),catSlug: catSlug || "style", descShort }),
     });
     console.log(res);
+    if (res.ok) {
+      router.push("/");
+    }
   };
 
   return (
@@ -124,6 +129,9 @@ const WritePageSection = () => {
         <option value="travel">travel</option>
         <option value="coding">coding</option>
       </select>
+      <div className="mb-12 px-12">
+        <Textarea placeholder="short description" onChange={(e) => setDescShort(e.target.value)} />
+      </div>
       <div className="flex gap-5 h-[700px] relative">
         <button 
           className="w-9 h-9 rounded-full bg-transparent border border-foreground flex items-center justify-center cursor-pointer hover:bg-muted transition-colors"
@@ -152,10 +160,10 @@ const WritePageSection = () => {
             </button>
           </div>
         )}
-        <div className="w-full">
+        <div className="w-full mb-12">
         <ReactQuill
+              theme="snow"
               className="w-full h-full"
-              theme="bubble"
               value={value}
               onChange={setValue}
               placeholder="Tell your story..."

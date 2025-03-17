@@ -8,7 +8,7 @@ export default function Home({ searchParams }) {
 
   return (
     <div className="min-h-screen">
-      <main className="container">
+      <main>
         <Featured />
         <CategoryList />
         <div className="flex gap-[50px]">
