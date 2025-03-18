@@ -5,7 +5,8 @@ import Image from "next/image";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
-
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 const Comments = ({ postSlug }) => {
   const [desc, setDesc] = useState("");
@@ -13,38 +14,34 @@ const Comments = ({ postSlug }) => {
   const fetcher = (url) => fetch(url).then((res) => res.json());
 
   const { data, mutate, isLoading } = useSWR(
-    `https://firdi-blog-omega.vercel.app/api/comments?postSlug=${postSlug}`,
+    `http://localhost:3000/api/comments?postSlug=${postSlug}`,
     fetcher
   );
 
   const handleSubmit = async () => {
     await fetch(`/api/comments`, {
       method: "POST",
-      body: JSON.stringify({ postSlug,  desc }),
+      body: JSON.stringify({ postSlug, desc }),
     });
     mutate();
     setDesc("");
-  }; 
+  };
 
   return (
     <div className="mt-12">
-      <h1 className="text-2xl font-bold text-muted-foreground mb-8">
+      <h1 className="text-2xl font-bold text-muted-foreground mb-4">
         Comments
       </h1>
       {session ? (
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <textarea
+        <div className="flex flex-col gap-4">
+          <Textarea
             placeholder="Write a comment..."
-            className="p-5 border rounded-md w-full min-h-[100px] focus:outline-none focus:ring-2 focus:ring-primary"
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
           />
-          <button
-            onClick={handleSubmit}
-            className="px-5 py-4 bg-teal-600 text-white font-bold border-none rounded-md cursor-pointer hover:bg-teal-700 transition-colors whitespace-nowrap"
-          >
+          <Button onClick={handleSubmit} size="lg" className="w-fit">
             Send
-          </button>
+          </Button>
         </div>
       ) : (
         <Link href="/login" className="text-primary hover:underline">

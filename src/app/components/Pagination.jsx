@@ -1,29 +1,41 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import React from "react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
-const Pagination = ({ page, hasNext, hasPrev }) => {
-  const router = useRouter();
-
+const PaginationSection = ({ page, hasNext, hasPrev }) => {
   return (
-    <div className="flex justify-between items-center mt-16">
-      <button
-        className="w-[100px] border-none p-4 bg-red-500 text-white rounded-lg"
-        disabled={!hasPrev}
-        onClick={() => router.push(`?page=${page - 1}`)}
-      >
-        Previous
-      </button>
-      <button
-        className="w-[100px] border-none p-4 bg-red-500 text-white rounded-lg"
-        disabled={!hasNext}
-        onClick={() => router.push(`?page=${page + 1}`)}
-      >
-        Next
-      </button>
-    </div>
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious href={`?page=${page - 1}`} />
+        </PaginationItem>
+        {hasPrev && (
+          <PaginationLink href={`?page=${page - 1}`}>{page - 1}</PaginationLink>
+        )}
+        <PaginationLink isActive={true} href={`?page=${page}`}>
+          {page}
+        </PaginationLink>
+        {hasNext && (
+          <PaginationLink href={`?page=${page + 1}`}>{page + 1}</PaginationLink>
+        )}
+        <PaginationItem>
+          <PaginationEllipsis />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext href={`?page=${hasNext ? page + 1 : page}`} />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   );
 };
 
-export default Pagination;
+export default PaginationSection;
