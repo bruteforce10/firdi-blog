@@ -1,9 +1,9 @@
 import Comments from "@/app/components/Comments";
-import Menu from "@/app/components/Menu";
 import Image from "next/image";
 import moment from "moment";
 import "moment/locale/id";
 import { Badge } from "@/components/ui/badge";
+import ShareButton from "@/app/components/atoms/post/share-button";
 
 const getData = async (slug) => {
   const res = await fetch(
@@ -49,7 +49,7 @@ const SinglePage = async ({ params }) => {
           dangerouslySetInnerHTML={{ __html: post?.desc }}
         />
       </div>
-      <div className="flex justify-between items-center">
+      <div className="grid grid-cols-3 divide-x divide-gray-500">
         <div className="flex items-center gap-5">
           {post?.user?.image && (
             <div className="relative w-12 h-12">
@@ -67,6 +67,9 @@ const SinglePage = async ({ params }) => {
               {moment(post.createdAt).locale("id").format("DD MMMM YYYY")}
             </span>
           </div>
+        </div>
+        <div className="flex items-center pl-6">
+          <ShareButton />
         </div>
       </div>
 

@@ -32,6 +32,8 @@ const WritePageSection = () => {
 
   const { status, data: session } = useSession();
 
+  console.log(session);
+
   useEffect(() => {
     if (status !== "loading") {
       setIsLoading(false);

@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import moment from "moment";
 
 const Comments = ({ postSlug }) => {
   const [desc, setDesc] = useState("");
@@ -66,7 +67,9 @@ const Comments = ({ postSlug }) => {
                 )}
                 <div className="flex flex-col gap-1 text-muted-foreground">
                   <span className="font-medium">{item.user.name}</span>
-                  <span className="text-sm">{item.createdAt}</span>
+                  <span className="text-sm">
+                    {moment(item?.createdAt).format("DD MMMM YYYY")}
+                  </span>
                 </div>
               </div>
               <p className="text-lg font-light">{item.desc}</p>
