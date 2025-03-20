@@ -39,6 +39,7 @@ export const GET = async (req) => {
           user: true,
         },
       });
+      console.log(posts);
       return new NextResponse(JSON.stringify({ posts }, { status: 200 }));
     }
   } catch (err) {
