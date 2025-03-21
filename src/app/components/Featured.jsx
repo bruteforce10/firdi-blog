@@ -14,11 +14,11 @@ const getData = async () => {
 
 const Featured = async () => {
   const { posts } = await getData();
-  console.log(posts);
-  // const post = posts[0];
+  const post = posts[0];
 
   return (
     <>
+      <pre>{JSON.stringify(post, null, 2)}</pre>
       <div className="container mx-auto mt-8 px-4 max-sm:hidden">
         <h1 className=" max-sm:hidden text-6xl/[1.2] lg:text-8xl/[1.2] font-light">
           Craft narratives ✍️ <br className="sm:hidden" /> that ignite{" "}
@@ -27,7 +27,7 @@ const Featured = async () => {
           <strong className="font-medium">entertainment 🎬</strong>
         </h1>
 
-        {/* <div className="relative w-full h-[500px] mt-8 overflow-hidden rounded-lg">
+        <div className="relative w-full h-[500px] mt-8 overflow-hidden rounded-lg">
           <Image
             src={post.img}
             alt="Featured post"
@@ -39,9 +39,9 @@ const Featured = async () => {
             {...post}
             author={post.user.name}
           />
-        </div> */}
+        </div>
       </div>
-      {/* <div className="max-sm:block hidden relative -mt-24 w-full h-[600px]">
+      <div className="max-sm:block hidden relative -mt-24 w-full h-[600px]">
         <Image
           src={post.img}
           alt="Featured post"
@@ -53,7 +53,7 @@ const Featured = async () => {
           {...post}
           author={post.user.name}
         />
-      </div> */}
+      </div>
     </>
   );
 };
