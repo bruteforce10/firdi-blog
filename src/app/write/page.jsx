@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), {
   ssr: false,
@@ -82,8 +82,8 @@ const WritePageSection = () => {
     return <div>Loading...</div>;
   }
 
-  if (!session?.user) {
-    return null;
+  if (session?.user?.role !== "ADMIN") {
+    return redirect("/");
   }
 
   // Simplified file handling

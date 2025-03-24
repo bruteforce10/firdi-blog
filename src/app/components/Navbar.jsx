@@ -104,7 +104,7 @@ export default function Navbar() {
           <ThemeToggle resolvedTheme={resolvedTheme} setTheme={setTheme} />
         </div>
 
-        <div className="flex items-center space-x-4 hidden md:flex">
+        <div className="items-center space-x-4 hidden md:flex">
           <ThemeToggle resolvedTheme={resolvedTheme} setTheme={setTheme} />
           <Input type="text" placeholder="Search" className="max-w-48" />
         </div>

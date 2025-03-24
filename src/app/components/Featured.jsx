@@ -18,7 +18,6 @@ const Featured = async () => {
 
   return (
     <>
-      <pre>{JSON.stringify(post, null, 2)}</pre>
       <div className="container mx-auto mt-8 px-4 max-sm:hidden">
         <h1 className=" max-sm:hidden text-6xl/[1.2] lg:text-8xl/[1.2] font-light">
           Craft narratives ✍️ <br className="sm:hidden" /> that ignite{" "}
