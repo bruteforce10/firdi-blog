@@ -1,6 +1,7 @@
 import Image from "next/image";
 import DescriptionFeatured from "./atoms/featured/description-featured";
 import { revalidatePath } from "next/cache";
+
 const getData = async () => {
   const res = await fetch(
     `http://localhost:3000/api/posts?getData=data-featured`
