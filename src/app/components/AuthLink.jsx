@@ -4,7 +4,8 @@ import { signOut, useSession } from "next-auth/react";
 
 const AuthLink = () => {
   const { data: session } = useSession();
-  console.log(session);
+  console.log("Session data:", session?.user);
+  console.log("User role:", session?.user?.role);
 
   return (
     <>
